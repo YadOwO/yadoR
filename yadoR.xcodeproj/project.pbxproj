@@ -8,27 +8,11 @@
 
 /* Begin PBXBuildFile section */
 		61A7D320305D1CDD0068A7BC /* yadoR Watch App.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = 61A7D31F305D1CDD0068A7BC /* yadoR Watch App.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		AF000000000000000000000F /* ReadinessCore in Frameworks */ = {
-			isa = PBXBuildFile;
-			productRef = AF000000000000000000000E;
-		};
-		AF0000000000000000000011 /* ReadinessCore in Frameworks */ = {
-			isa = PBXBuildFile;
-			productRef = AF0000000000000000000010;
-		};
-		AF0000000000000000000013 /* ReadinessCore in Frameworks */ = {
-			isa = PBXBuildFile;
-			productRef = AF0000000000000000000012;
-		};
-		AF0000000000000000000015 /* ReadinessCore in Frameworks */ = {
-			isa = PBXBuildFile;
-			productRef = AF0000000000000000000014;
-		};
-		AF000000000000000000001A /* yadoRWidgets.appex in Embed App Extensions */ = {
-			isa = PBXBuildFile;
-			fileRef = AF0000000000000000000008;
-			settings = {ATTRIBUTES = (RemoveHeadersOnCopy,); };
-		};
+		AF000000000000000000000F /* ReadinessCore in Frameworks */ = {isa = PBXBuildFile; productRef = AF000000000000000000000E /* ReadinessCore */; };
+		AF0000000000000000000011 /* ReadinessCore in Frameworks */ = {isa = PBXBuildFile; productRef = AF0000000000000000000010 /* ReadinessCore */; };
+		AF0000000000000000000013 /* ReadinessCore in Frameworks */ = {isa = PBXBuildFile; productRef = AF0000000000000000000012 /* ReadinessCore */; };
+		AF0000000000000000000015 /* ReadinessCore in Frameworks */ = {isa = PBXBuildFile; productRef = AF0000000000000000000014 /* ReadinessCore */; };
+		AF000000000000000000001A /* yadoRWidgets.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = AF0000000000000000000008 /* yadoRWidgets.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -67,9 +51,9 @@
 			remoteGlobalIDString = 61A7D31E305D1CDD0068A7BC;
 			remoteInfo = "yadoR Watch App";
 		};
-		AF000000000000000000001C /* Widget proxy */ = {
+		AF000000000000000000001C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 61A7D2F6305D1CDA0068A7BC;
+			containerPortal = 61A7D2F6305D1CDA0068A7BC /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = AF0000000000000000000005;
 			remoteInfo = yadoRWidgets;
@@ -88,12 +72,12 @@
 		};
 		AF000000000000000000001B /* Embed App Extensions */ = {
 			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
 			dstPath = "";
-			dstSubfolderSpec = 13;
-			files = (AF000000000000000000001A,);
+			dstSubfolder = PlugIns;
+			files = (
+				AF000000000000000000001A /* yadoRWidgets.appex in Embed App Extensions */,
+			);
 			name = "Embed App Extensions";
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
 
@@ -104,24 +88,41 @@
 		61A7D31F305D1CDD0068A7BC /* yadoR Watch App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "yadoR Watch App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		61A7D32E305D1CDE0068A7BC /* yadoR Watch AppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "yadoR Watch AppTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		61A7D338305D1CDE0068A7BC /* yadoR Watch AppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "yadoR Watch AppUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
-		AF0000000000000000000008 /* yadoRWidgets.appex */ = {
-			isa = PBXFileReference;
-			explicitFileType = "wrapper.app-extension";
-			includeInIndex = 0;
-			path = yadoRWidgets.appex;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
+		AF0000000000000000000008 /* yadoRWidgets.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = yadoRWidgets.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		AF0000000000000000000006 /* Exceptions for "yadoRWidgets" folder in "yadoRWidgets" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = AF0000000000000000000005 /* yadoRWidgets */;
+		};
+		AF000000000000000000000A /* Exceptions for "yadoR" folder in "yadoR" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 61A7D2FD305D1CDA0068A7BC /* yadoR */;
+		};
+		AF000000000000000000000B /* Exceptions for "yadoR Watch App" folder in "yadoR Watch App" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 61A7D31E305D1CDD0068A7BC /* yadoR Watch App */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		61A7D300305D1CDA0068A7BC /* yadoR */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				AF000000000000000000000A /* Exceptions for "yadoR" folder in "yadoR" target */,
+			);
 			path = yadoR;
 			sourceTree = "<group>";
-
-			exceptions = (
-				AF000000000000000000000A,
-			);
 		};
 		61A7D30E305D1CDD0068A7BC /* yadoRTests */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
@@ -135,12 +136,11 @@
 		};
 		61A7D323305D1CDD0068A7BC /* yadoR Watch App */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				AF000000000000000000000B /* Exceptions for "yadoR Watch App" folder in "yadoR Watch App" target */,
+			);
 			path = "yadoR Watch App";
 			sourceTree = "<group>";
-
-			exceptions = (
-				AF000000000000000000000B,
-			);
 		};
 		61A7D331305D1CDE0068A7BC /* yadoR Watch AppTests */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
@@ -174,7 +174,9 @@
 		};
 		AF0000000000000000000007 /* yadoRWidgets */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			exceptions = (AF0000000000000000000006,);
+			exceptions = (
+				AF0000000000000000000006 /* Exceptions for "yadoRWidgets" folder in "yadoRWidgets" target */,
+			);
 			path = yadoRWidgets;
 			sourceTree = "<group>";
 		};
@@ -184,13 +186,13 @@
 		61A7D2FB305D1CDA0068A7BC /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			files = (
-				AF000000000000000000000F,
+				AF000000000000000000000F /* ReadinessCore in Frameworks */,
 			);
 		};
 		61A7D308305D1CDD0068A7BC /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			files = (
-				AF0000000000000000000013,
+				AF0000000000000000000013 /* ReadinessCore in Frameworks */,
 			);
 		};
 		61A7D312305D1CDD0068A7BC /* Frameworks */ = {
@@ -201,7 +203,7 @@
 		61A7D31C305D1CDD0068A7BC /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			files = (
-				AF0000000000000000000011,
+				AF0000000000000000000011 /* ReadinessCore in Frameworks */,
 			);
 		};
 		61A7D32B305D1CDE0068A7BC /* Frameworks */ = {
@@ -216,9 +218,9 @@
 		};
 		AF0000000000000000000016 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (AF0000000000000000000015,);
-			runOnlyForDeploymentPostprocessing = 0;
+			files = (
+				AF0000000000000000000015 /* ReadinessCore in Frameworks */,
+			);
 		};
 /* End PBXFrameworksBuildPhase section */
 
@@ -226,11 +228,11 @@
 		61A7D2F5305D1CDA0068A7BC = {
 			isa = PBXGroup;
 			children = (
-				AF0000000000000000000001,
-				AF0000000000000000000002,
-				AF0000000000000000000003,
-				AF0000000000000000000004,
-				AF0000000000000000000007,
+				AF0000000000000000000001 /* Shared */,
+				AF0000000000000000000002 /* AppRuntime */,
+				AF0000000000000000000003 /* SharedUI */,
+				AF0000000000000000000004 /* docs */,
+				AF0000000000000000000007 /* yadoRWidgets */,
 				61A7D300305D1CDA0068A7BC /* yadoR */,
 				61A7D30E305D1CDD0068A7BC /* yadoRTests */,
 				61A7D318305D1CDD0068A7BC /* yadoRUITests */,
@@ -244,7 +246,7 @@
 		61A7D2FF305D1CDA0068A7BC /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				AF0000000000000000000008,
+				AF0000000000000000000008 /* yadoRWidgets.appex */,
 				61A7D2FE305D1CDA0068A7BC /* yadoR.app */,
 				61A7D30B305D1CDD0068A7BC /* yadoRTests.xctest */,
 				61A7D315305D1CDD0068A7BC /* yadoRUITests.xctest */,
@@ -273,19 +275,18 @@
 				61A7D322305D1CDD0068A7BC /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
-				AF0000000000000000000001,
-				AF0000000000000000000002,
-				AF0000000000000000000003,
 				61A7D300305D1CDA0068A7BC /* yadoR */,
+				AF0000000000000000000001 /* Shared */,
+				AF0000000000000000000002 /* AppRuntime */,
+				AF0000000000000000000003 /* SharedUI */,
 			);
 			name = yadoR;
+			packageProductDependencies = (
+				AF000000000000000000000E /* ReadinessCore */,
+			);
 			productName = yadoR;
 			productReference = 61A7D2FE305D1CDA0068A7BC /* yadoR.app */;
 			productType = "com.apple.product-type.application";
-
-			packageProductDependencies = (
-				AF000000000000000000000E,
-			);
 		};
 		61A7D30A305D1CDD0068A7BC /* yadoRTests */ = {
 			isa = PBXNativeTarget;
@@ -304,13 +305,12 @@
 				61A7D30E305D1CDD0068A7BC /* yadoRTests */,
 			);
 			name = yadoRTests;
+			packageProductDependencies = (
+				AF0000000000000000000012 /* ReadinessCore */,
+			);
 			productName = yadoRTests;
 			productReference = 61A7D30B305D1CDD0068A7BC /* yadoRTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
-
-			packageProductDependencies = (
-				AF0000000000000000000012,
-			);
 		};
 		61A7D314305D1CDD0068A7BC /* yadoRUITests */ = {
 			isa = PBXNativeTarget;
@@ -337,31 +337,29 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 61A7D340305D1CDE0068A7BC /* Build configuration list for PBXNativeTarget "yadoR Watch App" */;
 			buildPhases = (
-				AF000000000000000000001B,
+				AF000000000000000000001B /* Embed App Extensions */,
 				61A7D31B305D1CDD0068A7BC /* Sources */,
 				61A7D31C305D1CDD0068A7BC /* Frameworks */,
 				61A7D31D305D1CDD0068A7BC /* Resources */,
 			);
 			buildRules = (
 			);
+			dependencies = (
+				AF000000000000000000001D /* PBXTargetDependency */,
+			);
 			fileSystemSynchronizedGroups = (
-				AF0000000000000000000001,
-				AF0000000000000000000002,
-				AF0000000000000000000003,
 				61A7D323305D1CDD0068A7BC /* yadoR Watch App */,
+				AF0000000000000000000001 /* Shared */,
+				AF0000000000000000000002 /* AppRuntime */,
+				AF0000000000000000000003 /* SharedUI */,
 			);
 			name = "yadoR Watch App";
+			packageProductDependencies = (
+				AF0000000000000000000010 /* ReadinessCore */,
+			);
 			productName = "yadoR Watch App";
 			productReference = 61A7D31F305D1CDD0068A7BC /* yadoR Watch App.app */;
 			productType = "com.apple.product-type.application";
-
-			packageProductDependencies = (
-				AF0000000000000000000010,
-			);
-
-			dependencies = (
-				AF000000000000000000001D,
-			);
 		};
 		61A7D32D305D1CDE0068A7BC /* yadoR Watch AppTests */ = {
 			isa = PBXNativeTarget;
@@ -407,15 +405,24 @@
 		};
 		AF0000000000000000000005 /* yadoRWidgets */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = AF0000000000000000000019;
-			buildPhases = (AF000000000000000000000C, AF0000000000000000000016, AF000000000000000000000D,);
-			buildRules = ();
-			dependencies = ();
-			fileSystemSynchronizedGroups = (AF0000000000000000000007, AF0000000000000000000001,);
+			buildConfigurationList = AF0000000000000000000019 /* Build configuration list for PBXNativeTarget "yadoRWidgets" */;
+			buildPhases = (
+				AF000000000000000000000C /* Sources */,
+				AF0000000000000000000016 /* Frameworks */,
+				AF000000000000000000000D /* Resources */,
+			);
+			buildRules = (
+			);
+			fileSystemSynchronizedGroups = (
+				AF0000000000000000000001 /* Shared */,
+				AF0000000000000000000007 /* yadoRWidgets */,
+			);
 			name = yadoRWidgets;
-			packageProductDependencies = (AF0000000000000000000014,);
+			packageProductDependencies = (
+				AF0000000000000000000014 /* ReadinessCore */,
+			);
 			productName = yadoRWidgets;
-			productReference = AF0000000000000000000008;
+			productReference = AF0000000000000000000008 /* yadoRWidgets.appex */;
 			productType = "com.apple.product-type.app-extension";
 		};
 /* End PBXNativeTarget section */
@@ -461,22 +468,21 @@
 			);
 			mainGroup = 61A7D2F5305D1CDA0068A7BC;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				AF0000000000000000000009 /* XCLocalSwiftPackageReference "Packages/ReadinessCore" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 61A7D2FF305D1CDA0068A7BC /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				AF0000000000000000000005,
+				AF0000000000000000000005 /* yadoRWidgets */,
 				61A7D2FD305D1CDA0068A7BC /* yadoR */,
 				61A7D30A305D1CDD0068A7BC /* yadoRTests */,
 				61A7D314305D1CDD0068A7BC /* yadoRUITests */,
 				61A7D31E305D1CDD0068A7BC /* yadoR Watch App */,
 				61A7D32D305D1CDE0068A7BC /* yadoR Watch AppTests */,
 				61A7D337305D1CDE0068A7BC /* yadoR Watch AppUITests */,
-			);
-
-			packageReferences = (
-				AF0000000000000000000009,
 			);
 		};
 /* End PBXProject section */
@@ -514,9 +520,8 @@
 		};
 		AF000000000000000000000D /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = ();
-			runOnlyForDeploymentPostprocessing = 0;
+			files = (
+			);
 		};
 /* End PBXResourcesBuildPhase section */
 
@@ -553,9 +558,8 @@
 		};
 		AF000000000000000000000C /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = ();
-			runOnlyForDeploymentPostprocessing = 0;
+			files = (
+			);
 		};
 /* End PBXSourcesBuildPhase section */
 
@@ -585,10 +589,10 @@
 			target = 61A7D31E305D1CDD0068A7BC /* yadoR Watch App */;
 			targetProxy = 61A7D339305D1CDE0068A7BC /* PBXContainerItemProxy */;
 		};
-		AF000000000000000000001D /* Widget target dependency */ = {
+		AF000000000000000000001D /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = AF0000000000000000000005;
-			targetProxy = AF000000000000000000001C;
+			target = AF0000000000000000000005 /* yadoRWidgets */;
+			targetProxy = AF000000000000000000001C /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -710,18 +714,18 @@
 		61A7D341305D1CDE0068A7BC /* Debug configuration for PBXNativeTarget "yadoR Watch App" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				INFOPLIST_KEY_WKRunsIndependentlyOfCompanionApp = NO;
-				CODE_SIGN_ENTITLEMENTS = "yadoR Watch App/yadoRWatch.entitlements";
-				INFOPLIST_FILE = "yadoR Watch App/Info.plist";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "yadoR Watch App/yadoRWatch.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "yadoR Watch App/Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = yadoR;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = com.yado.yadoR;
+				INFOPLIST_KEY_WKRunsIndependentlyOfCompanionApp = NO;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -745,18 +749,18 @@
 		61A7D342305D1CDE0068A7BC /* Release configuration for PBXNativeTarget "yadoR Watch App" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				INFOPLIST_KEY_WKRunsIndependentlyOfCompanionApp = NO;
-				CODE_SIGN_ENTITLEMENTS = "yadoR Watch App/yadoRWatch.entitlements";
-				INFOPLIST_FILE = "yadoR Watch App/Info.plist";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "yadoR Watch App/yadoRWatch.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "yadoR Watch App/Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = yadoR;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = com.yado.yadoR;
+				INFOPLIST_KEY_WKRunsIndependentlyOfCompanionApp = NO;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -781,19 +785,16 @@
 		61A7D345305D1CDE0068A7BC /* Debug configuration for PBXNativeTarget "yadoR" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				INFOPLIST_KEY_NSHealthShareUsageDescription = "yadoR 读取睡眠、心率、HRV 和活动等健康记录，在本机计算准备度并同步到你的 Apple Watch，不上传服务器。";
-				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
-				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
-				SUPPORTS_MACCATALYST = NO;
-				CODE_SIGN_ENTITLEMENTS = "yadoR/yadoR.entitlements";
-				INFOPLIST_FILE = "yadoR/Info.plist";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = yadoR/yadoR.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = yadoR/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = yadoR;
+				INFOPLIST_KEY_NSHealthShareUsageDescription = "yadoR 读取睡眠、心率、HRV 和活动等健康记录，在本机计算准备度并同步到你的 Apple Watch，不上传服务器。";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -809,6 +810,9 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
 				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -821,19 +825,16 @@
 		61A7D346305D1CDE0068A7BC /* Release configuration for PBXNativeTarget "yadoR" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				INFOPLIST_KEY_NSHealthShareUsageDescription = "yadoR 读取睡眠、心率、HRV 和活动等健康记录，在本机计算准备度并同步到你的 Apple Watch，不上传服务器。";
-				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
-				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
-				SUPPORTS_MACCATALYST = NO;
-				CODE_SIGN_ENTITLEMENTS = "yadoR/yadoR.entitlements";
-				INFOPLIST_FILE = "yadoR/Info.plist";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = yadoR/yadoR.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = yadoR/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = yadoR;
+				INFOPLIST_KEY_NSHealthShareUsageDescription = "yadoR 读取睡眠、心率、HRV 和活动等健康记录，在本机计算准备度并同步到你的 Apple Watch，不上传服务器。";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -849,6 +850,9 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
 				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -1035,47 +1039,55 @@
 			};
 			name = Release;
 		};
-		AF0000000000000000000017 /* Debug for yadoRWidgets */ = {
+		AF0000000000000000000017 /* Debug configuration for PBXNativeTarget "yadoRWidgets" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				APPLICATION_EXTENSION_API_ONLY = YES;
-				CODE_SIGN_STYLE = Automatic;
 				CODE_SIGN_ENTITLEMENTS = yadoRWidgets/yadoRWidgets.entitlements;
+				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = yadoRWidgets/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "yadoR 准备度";
-				LD_RUNPATH_SEARCH_PATHS = ("$(inherited)", "@executable_path/Frameworks", "@executable_path/../../Frameworks",);
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.yado.yadoR.watchkitapp.widgets;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 6.0;
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 6.0;
 				TARGETED_DEVICE_FAMILY = 4;
 				WATCHOS_DEPLOYMENT_TARGET = 27.0;
 			};
 			name = Debug;
 		};
-		AF0000000000000000000018 /* Release for yadoRWidgets */ = {
+		AF0000000000000000000018 /* Release configuration for PBXNativeTarget "yadoRWidgets" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				APPLICATION_EXTENSION_API_ONLY = YES;
-				CODE_SIGN_STYLE = Automatic;
 				CODE_SIGN_ENTITLEMENTS = yadoRWidgets/yadoRWidgets.entitlements;
+				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = yadoRWidgets/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "yadoR 准备度";
-				LD_RUNPATH_SEARCH_PATHS = ("$(inherited)", "@executable_path/Frameworks", "@executable_path/../../Frameworks",);
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.yado.yadoR.watchkitapp.widgets;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 6.0;
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 6.0;
 				TARGETED_DEVICE_FAMILY = 4;
 				WATCHOS_DEPLOYMENT_TARGET = 27.0;
 			};
@@ -1140,55 +1152,42 @@
 			);
 			defaultConfigurationName = Release;
 		};
-		AF0000000000000000000019 /* Configurations for yadoRWidgets */ = {
+		AF0000000000000000000019 /* Build configuration list for PBXNativeTarget "yadoRWidgets" */ = {
 			isa = XCConfigurationList;
-			buildConfigurations = (AF0000000000000000000017, AF0000000000000000000018,);
-			defaultConfigurationIsVisible = 0;
+			buildConfigurations = (
+				AF0000000000000000000017 /* Debug configuration for PBXNativeTarget "yadoRWidgets" */,
+				AF0000000000000000000018 /* Release configuration for PBXNativeTarget "yadoRWidgets" */,
+			);
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		AF0000000000000000000006 /* Widget build exclusions */ = {
-			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
-			membershipExceptions = (Info.plist, yadoRWidgets.entitlements,);
-			target = AF0000000000000000000005;
-		};
-		AF000000000000000000000A /* App build exclusions */ = {
-			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
-			membershipExceptions = (Info.plist, "yadoR.entitlements",);
-			target = 61A7D2FD305D1CDA0068A7BC;
-		};
-		AF000000000000000000000B /* App build exclusions */ = {
-			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
-			membershipExceptions = (Info.plist, "yadoRWatch.entitlements",);
-			target = 61A7D31E305D1CDD0068A7BC;
-		};
-/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin XCLocalSwiftPackageReference section */
-		AF0000000000000000000009 /* ReadinessCore */ = {
+		AF0000000000000000000009 /* XCLocalSwiftPackageReference "Packages/ReadinessCore" */ = {
 			isa = XCLocalSwiftPackageReference;
 			relativePath = Packages/ReadinessCore;
 		};
 /* End XCLocalSwiftPackageReference section */
+
 /* Begin XCSwiftPackageProductDependency section */
 		AF000000000000000000000E /* ReadinessCore */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = AF0000000000000000000009;
+			package = AF0000000000000000000009 /* XCLocalSwiftPackageReference "Packages/ReadinessCore" */;
 			productName = ReadinessCore;
 		};
 		AF0000000000000000000010 /* ReadinessCore */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = AF0000000000000000000009;
+			package = AF0000000000000000000009 /* XCLocalSwiftPackageReference "Packages/ReadinessCore" */;
 			productName = ReadinessCore;
 		};
 		AF0000000000000000000012 /* ReadinessCore */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = AF0000000000000000000009;
+			package = AF0000000000000000000009 /* XCLocalSwiftPackageReference "Packages/ReadinessCore" */;
 			productName = ReadinessCore;
 		};
 		AF0000000000000000000014 /* ReadinessCore */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = AF0000000000000000000009;
+			package = AF0000000000000000000009 /* XCLocalSwiftPackageReference "Packages/ReadinessCore" */;
 			productName = ReadinessCore;
 		};
 /* End XCSwiftPackageProductDependency section */
