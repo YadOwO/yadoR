@@ -1,6 +1,6 @@
 # yadoR 首版实现
 
-依据：[产品方案](../../../../Documents/Codex/2026-09-18/ni-qu/outputs/2026-09-18-readiness-product-plan.md)。产品范围维持 R1–R8，不修改原方案。
+依据：[产品方案](product-plan.md)。产品范围维持 R1–R8，不修改原方案。
 
 ## 技术决定
 

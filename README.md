@@ -25,6 +25,7 @@ iPhone + Apple Watch 准备度 App，最低 iOS 27 / watchOS 27。实现当前�
 
 ## 规则及验证
 
+- [产品方案](docs/product-plan.md)：产品目标、首版范围、页面流程和验收标准。
 - [算法规格](docs/algorithm.md)：公式、数据门槛、时间窗口、缺失处理及限制。
 - [健康数据处理](docs/health-data.md)：来源选择、去重及实际设备的验证事项。
 - [实现决定](docs/implementation.md)：功能范围、计算与同步方式。
