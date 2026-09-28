@@ -17,7 +17,6 @@ struct FactorDetailView: View {
 
                     if let factor = snapshot.factors.first(where: { $0.kind == kind }) {
                         factorContent(factor)
-                        SnapshotMetadataView(snapshot: snapshot)
                     } else {
                         ReadinessCard {
                             VStack(alignment: .leading, spacing: 12) {
@@ -29,16 +28,18 @@ struct FactorDetailView: View {
                         }
                     }
 
-                    ReadinessCard {
-                        VStack(alignment: .leading, spacing: 8) {
-                            Text("核对原始记录")
-                                .font(.headline)
-                            Text(recordGuidance)
-                                .font(.subheadline)
-                                .foregroundStyle(.secondary)
-                                .fixedSize(horizontal: false, vertical: true)
-                        }
+                    VStack(alignment: .leading, spacing: 8) {
+                        Text("核对原始记录")
+                            .font(.subheadline.weight(.medium))
+                        Text(recordGuidance)
+                            .font(.caption)
+                            .foregroundStyle(.secondary)
+                            .fixedSize(horizontal: false, vertical: true)
                     }
+                    .padding(.horizontal, 4)
+
+                    SnapshotMetadataView(snapshot: snapshot)
+                        .padding(.horizontal, 4)
                 }
                 .frame(maxWidth: 640)
                 .padding(ReadinessStyle.pagePadding)
@@ -54,32 +55,32 @@ struct FactorDetailView: View {
 
     @ViewBuilder
     private func factorContent(_ factor: ReadinessFactor) -> some View {
-        ReadinessCard {
-            VStack(alignment: .leading, spacing: 16) {
-                Image(systemName: ReadinessStyle.symbol(for: kind))
-                    .font(.largeTitle)
-                    .foregroundStyle(ReadinessStyle.color(for: kind))
-                    .accessibilityHidden(true)
-                Text(factor.summary)
-                    .font(.title3.weight(.semibold))
-                    .fixedSize(horizontal: false, vertical: true)
-                Text(factor.explanation)
-                    .font(.body)
-                    .foregroundStyle(.secondary)
-                    .fixedSize(horizontal: false, vertical: true)
-            }
+        VStack(alignment: .leading, spacing: 8) {
+            Label(kind.title, systemImage: ReadinessStyle.symbol(for: kind))
+                .font(.subheadline.weight(.medium))
+                .foregroundStyle(ReadinessStyle.color(for: kind))
+            Text(factor.summary)
+                .font(.title2.weight(.semibold))
+                .fixedSize(horizontal: false, vertical: true)
         }
+        .padding(.horizontal, 4)
 
         if !factor.metrics.isEmpty {
-            ReadinessCard {
-                VStack(alignment: .leading, spacing: 16) {
-                    ForEach(factor.metrics) { metric in
+            VStack(alignment: .leading, spacing: 10) {
+                Text("本次记录")
+                    .font(.subheadline.weight(.medium))
+                    .foregroundStyle(.secondary)
+                    .padding(.horizontal, 4)
+
+                ForEach(factor.metrics) { metric in
+                    ReadinessCard {
                         VStack(alignment: .leading, spacing: 6) {
                             Text(metric.title)
                                 .font(.subheadline)
                                 .foregroundStyle(.secondary)
                             Text(metric.value)
                                 .font(.title2.weight(.semibold))
+                                .foregroundStyle(ReadinessStyle.color(for: kind))
                                 .monospacedDigit()
                                 .fixedSize(horizontal: false, vertical: true)
                             if let reference = metric.reference {
@@ -89,15 +90,21 @@ struct FactorDetailView: View {
                                     .fixedSize(horizontal: false, vertical: true)
                             }
                         }
-                        .accessibilityElement(children: .combine)
-
-                        if metric.id != factor.metrics.last?.id {
-                            Divider()
-                        }
                     }
+                    .accessibilityElement(children: .combine)
                 }
             }
         }
+
+        VStack(alignment: .leading, spacing: 8) {
+            Text("如何理解")
+                .font(.headline)
+            Text(factor.explanation)
+                .font(.subheadline)
+                .foregroundStyle(.secondary)
+                .fixedSize(horizontal: false, vertical: true)
+        }
+        .padding(.horizontal, 4)
 
         if !factor.omitted.isEmpty {
             ReadinessCard {

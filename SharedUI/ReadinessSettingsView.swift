@@ -112,6 +112,7 @@ struct ReadinessSettingsView: View {
         VStack(alignment: .leading, spacing: 5) {
             Text("\(range) 分 · \(band.title)")
                 .font(.headline)
+                .foregroundStyle(ReadinessStyle.color(for: band))
             Text(band.explanation)
                 .font(.subheadline)
                 .foregroundStyle(.secondary)
