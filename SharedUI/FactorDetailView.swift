@@ -56,9 +56,9 @@ struct FactorDetailView: View {
     private func factorContent(_ factor: ReadinessFactor) -> some View {
         ReadinessCard {
             VStack(alignment: .leading, spacing: 16) {
-                Image(systemName: kind.symbol)
+                Image(systemName: ReadinessStyle.symbol(for: kind))
                     .font(.largeTitle)
-                    .foregroundStyle(ReadinessStyle.accent)
+                    .foregroundStyle(ReadinessStyle.color(for: kind))
                     .accessibilityHidden(true)
                 Text(factor.summary)
                     .font(.title3.weight(.semibold))
@@ -70,24 +70,32 @@ struct FactorDetailView: View {
             }
         }
 
-        ForEach(factor.metrics) { metric in
+        if !factor.metrics.isEmpty {
             ReadinessCard {
-                VStack(alignment: .leading, spacing: 8) {
-                    Text(metric.title)
-                        .font(.subheadline)
-                        .foregroundStyle(.secondary)
-                    Text(metric.value)
-                        .font(.title3.weight(.semibold))
-                        .monospacedDigit()
-                        .fixedSize(horizontal: false, vertical: true)
-                    if let reference = metric.reference {
-                        Text(reference)
-                            .font(.caption)
-                            .foregroundStyle(.secondary)
-                            .fixedSize(horizontal: false, vertical: true)
+                VStack(alignment: .leading, spacing: 16) {
+                    ForEach(factor.metrics) { metric in
+                        VStack(alignment: .leading, spacing: 6) {
+                            Text(metric.title)
+                                .font(.subheadline)
+                                .foregroundStyle(.secondary)
+                            Text(metric.value)
+                                .font(.title2.weight(.semibold))
+                                .monospacedDigit()
+                                .fixedSize(horizontal: false, vertical: true)
+                            if let reference = metric.reference {
+                                Text(reference)
+                                    .font(.caption)
+                                    .foregroundStyle(.secondary)
+                                    .fixedSize(horizontal: false, vertical: true)
+                            }
+                        }
+                        .accessibilityElement(children: .combine)
+
+                        if metric.id != factor.metrics.last?.id {
+                            Divider()
+                        }
                     }
                 }
-                .accessibilityElement(children: .combine)
             }
         }
 

@@ -10,22 +10,21 @@ struct ReadinessHomeView: View {
             TimelineView(.periodic(from: .now, by: 60)) { context in
                 ReadinessDashboard(snapshot: store.snapshot.visible(at: context.date), date: context.date)
             }
-            .navigationTitle("yadoR")
             #if os(iOS)
-            .navigationBarTitleDisplayMode(.inline)
-            #endif
+            .navigationTitle("准备度")
+            .navigationBarTitleDisplayMode(.large)
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
                     NavigationLink {
                         ReadinessSettingsView()
                     } label: {
                         Image(systemName: "ellipsis")
-                            .foregroundStyle(ReadinessStyle.toolbarForeground)
                     }
                     .accessibilityLabel("说明与设置")
                     .accessibilityIdentifier("open_settings")
                 }
             }
+            #endif
         }
         .id(navigationID)
         .onOpenURL { url in
@@ -42,19 +41,30 @@ private struct ReadinessDashboard: View {
 
     var body: some View {
         ScrollView {
-            VStack(alignment: .leading, spacing: 18) {
+            VStack(alignment: .leading, spacing: sectionSpacing) {
                 #if os(iOS)
                 Text(dateHeading)
                     .font(.subheadline)
                     .foregroundStyle(.secondary)
                     .padding(.horizontal, 4)
-                #endif
-
                 if store.isDemo {
                     DemoNotice()
                 }
+                #endif
 
                 mainContent
+
+                #if os(watchOS)
+                if store.isDemo {
+                    DemoNotice()
+                }
+                if let band = snapshot.band, snapshot.status == .ready {
+                    Text(band.explanation)
+                        .font(.subheadline)
+                        .foregroundStyle(.secondary)
+                        .fixedSize(horizontal: false, vertical: true)
+                }
+                #endif
 
                 if let error = store.errorMessage {
                     ReadinessCard {
@@ -70,9 +80,11 @@ private struct ReadinessDashboard: View {
                     .accessibilityIdentifier("refresh_error")
                 }
 
+                #if os(iOS)
                 if snapshot.status == .ready, !snapshot.factors.isEmpty {
                     factorLinks
                 }
+                #endif
 
                 if let syncMessage = store.syncMessage {
                     Label(syncMessage, systemImage: "arrow.triangle.2.circlepath")
@@ -87,6 +99,15 @@ private struct ReadinessDashboard: View {
                     refreshButton
                 }
 
+                #if os(watchOS)
+                NavigationLink {
+                    ReadinessSettingsView()
+                } label: {
+                    Label("说明与设置", systemImage: "ellipsis.circle")
+                }
+                .accessibilityIdentifier("open_settings")
+                #endif
+
                 #if DEBUG
                 if store.isDemo {
                     Button("退出演示") {
@@ -98,7 +119,11 @@ private struct ReadinessDashboard: View {
                 #endif
             }
             .frame(maxWidth: 640)
+            #if os(watchOS)
+            .padding(.horizontal, ReadinessStyle.pagePadding)
+            #else
             .padding(ReadinessStyle.pagePadding)
+            #endif
             .frame(maxWidth: .infinity)
         }
         .background(ReadinessStyle.background)
@@ -119,6 +144,14 @@ private struct ReadinessDashboard: View {
         #endif
     }
 
+    private var sectionSpacing: CGFloat {
+        #if os(watchOS)
+        8
+        #else
+        16
+        #endif
+    }
+
     @ViewBuilder
     private var mainContent: some View {
         if store.isRefreshing && snapshot.status == .notSetUp {
@@ -134,9 +167,36 @@ private struct ReadinessDashboard: View {
             }
             .accessibilityIdentifier("initializing_state")
         } else if snapshot.status == .ready, let score = snapshot.score, let band = snapshot.band {
-            ReadinessCard {
+            #if os(watchOS)
+            VStack(spacing: 8) {
                 ReadinessScoreView(score: score, band: band)
+                factorShortcuts
             }
+            .background {
+                RadialGradient(colors: [ReadinessStyle.accent.opacity(0.12), .clear],
+                               center: .center, startRadius: 0, endRadius: 80)
+                    .allowsHitTesting(false)
+            }
+            #else
+            ReadinessCard {
+                VStack(spacing: 20) {
+                    HStack {
+                        Text("今日准备度")
+                            .font(.headline)
+                        Spacer()
+                        Text("0–10 分")
+                            .font(.subheadline)
+                            .foregroundStyle(.secondary)
+                    }
+                    ReadinessScoreView(score: score, band: band)
+                    Text(band.explanation)
+                        .font(.subheadline)
+                        .foregroundStyle(.secondary)
+                        .multilineTextAlignment(.center)
+                        .fixedSize(horizontal: false, vertical: true)
+                }
+            }
+            #endif
         } else if snapshot.status == .notSetUp {
             #if os(iOS)
             ConnectHealthView()
@@ -154,17 +214,52 @@ private struct ReadinessDashboard: View {
                 .font(.headline)
                 .padding(.horizontal, 4)
 
-            ForEach(snapshot.factors) { factor in
-                NavigationLink {
-                    FactorDetailView(kind: factor.kind)
-                } label: {
-                    FactorRow(factor: factor)
+            VStack(spacing: 0) {
+                ForEach(snapshot.factors) { factor in
+                    NavigationLink {
+                        FactorDetailView(kind: factor.kind)
+                    } label: {
+                        FactorRow(factor: factor)
+                    }
+                    .buttonStyle(.plain)
+                    .accessibilityIdentifier("factor_\(factor.kind.rawValue)")
+
+                    if factor.id != snapshot.factors.last?.id {
+                        Divider().padding(.leading, 58)
+                    }
                 }
-                .buttonStyle(.plain)
-                .accessibilityIdentifier("factor_\(factor.kind.rawValue)")
+            }
+            .background(ReadinessStyle.surface, in: RoundedRectangle(cornerRadius: 24))
+        }
+    }
+
+    #if os(watchOS)
+    private var factorShortcuts: some View {
+        HStack(spacing: 4) {
+            ForEach([FactorKind.activity, .vitals, .sleep]) { kind in
+                if let factor = snapshot.factors.first(where: { $0.kind == kind }) {
+                    NavigationLink {
+                        FactorDetailView(kind: kind)
+                    } label: {
+                        VStack(spacing: 5) {
+                            Image(systemName: ReadinessStyle.symbol(for: kind))
+                                .font(.title3)
+                            Text(kind.title)
+                                .font(.caption2)
+                                .fixedSize(horizontal: false, vertical: true)
+                        }
+                        .foregroundStyle(.primary)
+                        .frame(maxWidth: .infinity, minHeight: 44)
+                        .contentShape(Rectangle())
+                    }
+                    .buttonStyle(.plain)
+                    .accessibilityLabel("\(kind.title)，\(factor.summary)")
+                    .accessibilityIdentifier("factor_\(kind.rawValue)")
+                }
             }
         }
     }
+    #endif
 
     private var showRefresh: Bool {
         #if os(watchOS)

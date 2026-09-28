@@ -719,6 +719,7 @@
 				CODE_SIGN_ENTITLEMENTS = "yadoR Watch App/yadoRWatch.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = NVWW4LND82;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "yadoR Watch App/Info.plist";
@@ -754,6 +755,7 @@
 				CODE_SIGN_ENTITLEMENTS = "yadoR Watch App/yadoRWatch.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = NVWW4LND82;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "yadoR Watch App/Info.plist";
@@ -790,6 +792,7 @@
 				CODE_SIGN_ENTITLEMENTS = yadoR/yadoR.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = NVWW4LND82;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = yadoR/Info.plist;
@@ -830,6 +833,7 @@
 				CODE_SIGN_ENTITLEMENTS = yadoR/yadoR.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = NVWW4LND82;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = yadoR/Info.plist;
@@ -1046,6 +1050,7 @@
 				CODE_SIGN_ENTITLEMENTS = yadoRWidgets/yadoRWidgets.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = NVWW4LND82;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = yadoRWidgets/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "yadoR 准备度";
@@ -1073,6 +1078,7 @@
 				CODE_SIGN_ENTITLEMENTS = yadoRWidgets/yadoRWidgets.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = NVWW4LND82;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = yadoRWidgets/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "yadoR 准备度";
