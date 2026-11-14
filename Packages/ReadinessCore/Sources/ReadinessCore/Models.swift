@@ -45,13 +45,6 @@ public enum FactorKind: String, Codable, Sendable, CaseIterable, Identifiable {
         case .activity: "活动"
         }
     }
-    public var symbol: String {
-        switch self {
-        case .sleep: "moon.zzz.fill"
-        case .vitals: "waveform.path.ecg"
-        case .activity: "figure.walk"
-        }
-    }
 }
 
 public struct FactorMetric: Codable, Equatable, Sendable, Identifiable {

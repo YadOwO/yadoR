@@ -17,7 +17,8 @@ public struct ReadinessEngine: Sendable {
         func unavailable(_ status: AssessmentStatus, _ message: String, nights: Int = 0) -> ReadinessSnapshot {
             ReadinessSnapshot(status: status, day: today, generatedAt: now,
                               timeZoneIdentifier: calendar.timeZone.identifier, dataThrough: cutoff,
-                              validNights: nights, message: message, sourceName: current?.sourceName)
+                              validNights: nights, requiredNights: Parameters.requiredNights,
+                              message: message, sourceName: current?.sourceName)
         }
 
         guard let current else {
@@ -40,7 +41,7 @@ public struct ReadinessEngine: Sendable {
         }
         guard completeNights.count >= Parameters.requiredNights else {
             return unavailable(.buildingBaseline,
-                               "过去 49 天已获得同一来源的 \(completeNights.count) 个有效夜晚，需要至少 7 晚。更换手表来源后会重新检查基线。",
+                               "过去 49 天已获得同一来源的 \(completeNights.count) 个有效夜晚，需要至少 \(Parameters.requiredNights) 晚。更换手表来源后会重新检查基线。",
                                nights: completeNights.count)
         }
         let previous = completeNights.filter { !calendar.isDate($0.end, inSameDayAs: today) }
@@ -77,6 +78,7 @@ public struct ReadinessEngine: Sendable {
                                  timeZoneIdentifier: calendar.timeZone.identifier,
                                  dataThrough: cutoff ?? sameSource.map(\.end).max(), score: score,
                                  validNights: completeNights.count,
+                                 requiredNights: Parameters.requiredNights,
                                  message: ReadinessBand(score: score).explanation,
                                  factors: [sleep.factor, vitals.factor, load.factor],
                                  sourceName: current.sourceName)

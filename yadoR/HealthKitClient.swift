@@ -220,13 +220,10 @@ nonisolated enum HealthSampleProcessor {
 
     static func sleepWindows(samples: [HKSample], now: Date) -> [DateInterval] {
         let segments = samples.compactMap { sample -> SleepSegment? in
-            guard let sleep = sample as? HKCategorySample,
-                  sleep.categoryType == HKCategoryType(.sleepAnalysis),
-                  sleep.startDate < sleep.endDate, sleep.endDate <= now,
-                  (sleep.metadata?[HKMetadataKeyWasUserEntered] as? NSNumber)?.boolValue != true,
-                  let source = Source(sleep), let stage = sleepStage(sleep.value) else { return nil }
-            return SleepSegment(id: sleep.uuid.uuidString, sourceID: source.id, sourceName: source.name,
-                                start: sleep.startDate, end: sleep.endDate, stage: stage)
+            guard sample.endDate <= now,
+                  (sample.metadata?[HKMetadataKeyWasUserEntered] as? NSNumber)?.boolValue != true,
+                  let source = Source(sample) else { return nil }
+            return sleepSegment(sample, source: source)
         }
         return SleepNormalizer.normalize(segments, through: now).map { DateInterval(start: $0.start, end: $0.end) }
     }
@@ -245,10 +242,8 @@ nonisolated enum HealthSampleProcessor {
                   let source = Source(sample) else { continue }
             let id = sample.uuid.uuidString
             sources[source.id] = source
-            if let sleep = sample as? HKCategorySample, sleep.categoryType == HKCategoryType(.sleepAnalysis),
-               sleep.startDate < sleep.endDate, let stage = sleepStage(sleep.value) {
-                segments.append(SleepSegment(id: id, sourceID: source.id, sourceName: source.name,
-                                             start: sleep.startDate, end: sleep.endDate, stage: stage))
+            if let segment = sleepSegment(sample, source: source) {
+                segments.append(segment)
             } else if let quantity = sample as? HKQuantitySample,
                       let value = quantityValue(quantity) {
                 quantities.append(Quantity(id: id, type: quantity.quantityType.identifier,
@@ -367,6 +362,15 @@ nonisolated enum HealthSampleProcessor {
             low += 1
         }
         return result
+    }
+
+    private static func sleepSegment(_ sample: HKSample, source: Source) -> SleepSegment? {
+        guard let sleep = sample as? HKCategorySample,
+              sleep.categoryType == HKCategoryType(.sleepAnalysis),
+              sleep.startDate < sleep.endDate,
+              let stage = sleepStage(sleep.value) else { return nil }
+        return SleepSegment(id: sleep.uuid.uuidString, sourceID: source.id, sourceName: source.name,
+                            start: sleep.startDate, end: sleep.endDate, stage: stage)
     }
 
     private static func sleepStage(_ value: Int) -> SleepSegment.Stage? {
