@@ -13,8 +13,6 @@ final class HealthKitClient {
     private var observationGeneration = UUID()
     private var backgroundFailures = Set<String>()
     private var observerFailures = Set<String>()
-    /// Background registration is best effort; foreground reads still work.
-    var hasBackgroundDeliveryFailure: Bool { !backgroundFailures.isEmpty }
 
     init() {}
 
@@ -220,9 +218,7 @@ nonisolated enum HealthSampleProcessor {
 
     static func sleepWindows(samples: [HKSample], now: Date) -> [DateInterval] {
         let segments = samples.compactMap { sample -> SleepSegment? in
-            guard sample.endDate <= now,
-                  (sample.metadata?[HKMetadataKeyWasUserEntered] as? NSNumber)?.boolValue != true,
-                  let source = Source(sample) else { return nil }
+            guard let source = eligibleSource(sample, now: now) else { return nil }
             return sleepSegment(sample, source: source)
         }
         return SleepNormalizer.normalize(segments, through: now).map { DateInterval(start: $0.start, end: $0.end) }
@@ -236,10 +232,10 @@ nonisolated enum HealthSampleProcessor {
         var sources: [String: Source] = [:]
         for sample in samples.sorted(by: { $0.uuid.uuidString < $1.uuid.uuidString }) {
             try Task.checkCancellation()
+            // Keep the end-date check before UUID dedupe to preserve evaluation order.
             guard sample.startDate <= sample.endDate, sample.endDate <= now,
                   seen.insert(sample.uuid).inserted,
-                  (sample.metadata?[HKMetadataKeyWasUserEntered] as? NSNumber)?.boolValue != true,
-                  let source = Source(sample) else { continue }
+                  let source = eligibleSource(sample, now: now) else { continue }
             let id = sample.uuid.uuidString
             sources[source.id] = source
             if let segment = sleepSegment(sample, source: source) {
@@ -270,6 +266,19 @@ nonisolated enum HealthSampleProcessor {
         let byType = Dictionary(grouping: quantities, by: \.type).mapValues { values in
             values.sorted { $0.start == $1.start ? $0.id < $1.id : $0.start < $1.start }
         }
+        try attachNightMetrics(to: &nights, byType: byType, sources: sources)
+
+        let preferred = nights.filter { calendar.isDate($0.end, inSameDayAs: now) }
+            .sorted { $0.asleepSeconds == $1.asleepSeconds ? $0.id < $1.id : $0.asleepSeconds > $1.asleepSeconds }
+            .first.flatMap { sources[$0.sourceID] }
+        let activity = try activityDays(byType: byType, workouts: workouts, preferred: preferred,
+                                        now: now, calendar: calendar, dataThrough: &dataThrough)
+        let digest = try fingerprint(nights: nights, activity: activity, dataThrough: dataThrough)
+        return ReadinessInput(nights: nights, activity: activity, dataThrough: dataThrough, fingerprint: digest)
+    }
+
+    private static func attachNightMetrics(to nights: inout [NightRecord], byType: [String: [Quantity]],
+                                           sources: [String: Source]) throws {
         for index in nights.indices {
             try Task.checkCancellation()
             let night = nights[index]
@@ -298,10 +307,11 @@ nonisolated enum HealthSampleProcessor {
             nights[index].wristTemperature = median(values(.appleSleepingWristTemperature).map(\.value))
             nights[index].oxygenSaturation = median(values(.oxygenSaturation).map(\.value))
         }
+    }
 
-        let preferred = nights.filter { calendar.isDate($0.end, inSameDayAs: now) }
-            .sorted { $0.asleepSeconds == $1.asleepSeconds ? $0.id < $1.id : $0.asleepSeconds > $1.asleepSeconds }
-            .first.flatMap { sources[$0.sourceID] }
+    private static func activityDays(byType: [String: [Quantity]], workouts: [Work], preferred: Source?,
+                                     now: Date, calendar: Calendar,
+                                     dataThrough: inout Date?) throws -> [ActivityDay] {
         let energy = byType[HKQuantityTypeIdentifier.activeEnergyBurned.rawValue] ?? []
         let resting = byType[HKQuantityTypeIdentifier.restingHeartRate.rawValue] ?? []
         let today = calendar.startOfDay(for: now)
@@ -331,6 +341,11 @@ nonisolated enum HealthSampleProcessor {
                                         workoutMinutes: workoutResult.total / 60,
                                         effortLoad: nil, restingHeartRate: median(selectedResting.map(\.value))))
         }
+        return activity
+    }
+
+    private static func fingerprint(nights: [NightRecord], activity: [ActivityDay],
+                                    dataThrough: Date?) throws -> String {
         // Fingerprint the effective normalized input, not unused raw records or
         // import UUIDs. Empty calendar scaffolding must not manufacture new data.
         struct EffectiveInput: Encodable {
@@ -345,7 +360,7 @@ nonisolated enum HealthSampleProcessor {
         encoder.outputFormatting = [.sortedKeys]
         let data = try encoder.encode(effective)
         let digest = SHA256.hash(data: data).map { String(format: "%02x", $0) }.joined()
-        return ReadinessInput(nights: nights, activity: activity, dataThrough: dataThrough, fingerprint: digest)
+        return digest
     }
 
     /// Each type is sorted by start time once. Binary search avoids rescanning
@@ -362,6 +377,13 @@ nonisolated enum HealthSampleProcessor {
             low += 1
         }
         return result
+    }
+
+    /// Ended, automatically recorded Watch samples only (docs/health-data.md).
+    private static func eligibleSource(_ sample: HKSample, now: Date) -> Source? {
+        guard sample.endDate <= now,
+              (sample.metadata?[HKMetadataKeyWasUserEntered] as? NSNumber)?.boolValue != true else { return nil }
+        return Source(sample)
     }
 
     private static func sleepSegment(_ sample: HKSample, source: Source) -> SleepSegment? {
