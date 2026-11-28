@@ -5,10 +5,20 @@ public enum ReadinessBand: String, Codable, Sendable, CaseIterable {
 
     public init(score: Int) {
         switch score {
-        case ...1: self = .recover
-        case 2...4: self = .gentle
-        case 5...7: self = .ready
+        case ...Self.recover.scoreRange.upperBound: self = .recover
+        case ...Self.gentle.scoreRange.upperBound: self = .gentle
+        case ...Self.ready.scoreRange.upperBound: self = .ready
         default: self = .strong
+        }
+    }
+
+    /// 设置页展示用的分数区间；init(score:) 用每档的上界划分，两处必须共用这份定义。
+    public var scoreRange: ClosedRange<Int> {
+        switch self {
+        case .recover: 0...1
+        case .gentle: 2...4
+        case .ready: 5...7
+        case .strong: 8...10
         }
     }
 

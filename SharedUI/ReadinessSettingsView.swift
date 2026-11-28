@@ -22,10 +22,10 @@ struct ReadinessSettingsView: View {
             }
 
             Section("四档状态") {
-                bandRow("0–1", band: .recover)
-                bandRow("2–4", band: .gentle)
-                bandRow("5–7", band: .ready)
-                bandRow("8–10", band: .strong)
+                bandRow(.recover)
+                bandRow(.gentle)
+                bandRow(.ready)
+                bandRow(.strong)
             }
 
             Section("数据与隐私") {
@@ -108,9 +108,9 @@ struct ReadinessSettingsView: View {
         #endif
     }
 
-    private func bandRow(_ range: String, band: ReadinessBand) -> some View {
+    private func bandRow(_ band: ReadinessBand) -> some View {
         VStack(alignment: .leading, spacing: 5) {
-            Text("\(range) 分 · \(band.title)")
+            Text("\(band.scoreRange.lowerBound)–\(band.scoreRange.upperBound) 分 · \(band.title)")
                 .font(.headline)
                 .foregroundStyle(ReadinessStyle.color(for: band))
             Text(band.explanation)
